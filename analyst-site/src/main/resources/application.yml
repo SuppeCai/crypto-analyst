@@ -1,0 +1,97 @@
+# spring
+spring:
+  application:
+    name: analyst
+  profiles:
+    active: dev
+  aop:
+    proxy-target-class: true
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/analyst?useSSL=false&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false
+      driver-class-name: com.mysql.jdbc.Driver
+      initial-size: 5
+      min-idle: 50
+      max-active: 300
+      max-wait: 500
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      validation-query: SELECT 1 FROM DUAL
+      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      use-global-data-source-stat: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: pw
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName : analyst-scheduler
+            instanceId : AUTO
+          threadPool:
+            class : org.quartz.simpl.SimpleThreadPool
+            threadCount : 25
+            threadPriority : 5
+          jobStore:
+            misfireThreshold : 60000
+            class : org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass : org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            useProperties : false
+            dataSource : myDS
+            tablePrefix : QRTZ_
+            isClustered : false
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password: pwd
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+  cache:
+    cache-names: analyst
+
+# tomcat
+server:
+  port: 8080
+  tomcat:
+    max-threads: 1000
+    max-connections: 2000
+
+# mybatis
+mybatis:
+  type-aliases-package: me.bl0ckchain.analyst.core.entity
+  mapper-locations: classpath:mapper/*.xml
+  check-config-location: true
+  type-handlers-package: me.bl0ckchain.analyst.core.type
+# mapper
+mapper:
+  not-empty: false
+  identity: MYSQL
+
+# pagehelper
+pagehelper:
+  helper-dialect: mysql
+  closeConn: false
+  reasonable: true
+  support-methods-arguments: true
+  params: "count=countSql"
+
+## quartz
+#quartz:
+#  scheduler-name: QUARTZ
+#  thread-count: 10
+#  thread-name-prefix: quartz_thread
+#  tasks: "klineDataTask: 1 * * * * ?"

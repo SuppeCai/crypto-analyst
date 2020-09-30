@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.bl0ckchain.analyst.core.mapper.KlineMapper">
+  <resultMap id="BaseResultMap" type="me.bl0ckchain.analyst.core.entity.Kline">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="start_at" jdbcType="BIGINT" property="startAt" />
+    <result column="exchange_id" jdbcType="BIGINT" property="exchangeId" />
+    <result column="base_id" jdbcType="BIGINT" property="baseId" />
+    <result column="quote_id" jdbcType="BIGINT" property="quoteId" />
+    <result column="open" jdbcType="DECIMAL" property="open" />
+    <result column="close" jdbcType="DECIMAL" property="close" />
+    <result column="low" jdbcType="DECIMAL" property="low" />
+    <result column="high" jdbcType="DECIMAL" property="high" />
+    <result column="volume" jdbcType="DECIMAL" property="volume" />
+    <result column="volamount" jdbcType="INTEGER" property="volamount" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="unit" jdbcType="TINYINT" property="unit" />
+    <result column="unit_num" jdbcType="TINYINT" property="unitNum" />
+    <result column="create_at" jdbcType="BIGINT" property="createAt" />
+    <result column="update_at" jdbcType="BIGINT" property="updateAt" />
+    <result column="end_at" jdbcType="BIGINT" property="endAt" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <sql id="table">
+    a_kline_${unit}_${unit_num}
+  </sql>
+  <sql id="Base_Column_List">
+    id, start_at, exchange_id, base_id, quote_id, open, close, low, high, volume, volamount, 
+    amount, unit, unit_num, create_at, update_at, end_at, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+    <include refid="table">
+      <property name="unit" value="#{unit}"/>
+      <property name="unit_num" value="#{unitNum}"/>
+    </include>
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from
+    <include refid="table">
+      <property name="unit" value="#{unit}"/>
+      <property name="unit_num" value="#{unitNum}"/>
+    </include>
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="me.bl0ckchain.analyst.core.entity.Kline">
+    insert into
+    <include refid="table">
+      <property name="unit" value="#{unit}"/>
+      <property name="unit_num" value="#{unitNum}"/>
+    </include>
+     (id, start_at, exchange_id,
+      base_id, quote_id, open,
+      close, low, high, volume,
+      volamount, amount, unit,
+      unit_num, create_at, update_at,
+      end_at, status)
+    values (#{id,jdbcType=BIGINT}, #{startAt,jdbcType=BIGINT}, #{exchangeId,jdbcType=BIGINT},
+      #{baseId,jdbcType=BIGINT}, #{quoteId,jdbcType=BIGINT}, #{open,jdbcType=DECIMAL},
+      #{close,jdbcType=DECIMAL}, #{low,jdbcType=DECIMAL}, #{high,jdbcType=DECIMAL}, #{volume,jdbcType=DECIMAL},
+      #{volamount,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, #{unit,jdbcType=TINYINT},
+      #{unitNum,jdbcType=TINYINT}, #{createAt,jdbcType=BIGINT}, #{updateAt,jdbcType=BIGINT},
+      #{endAt,jdbcType=BIGINT}, #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="me.bl0ckchain.analyst.core.entity.Kline">
+    insert into
+    <include refid="table">
+      <property name="unit" value="#{unit}"/>
+      <property name="unit_num" value="#{unitNum}"/>
+    </include>
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="startAt != null">
+        start_at,
+      </if>
+      <if test="exchangeId != null">
+        exchange_id,
+      </if>
+      <if test="baseId != null">
+        base_id,
+      </if>
+      <if test="quoteId != null">
+        quote_id,
+      </if>
+      <if test="open != null">
+        open,
+      </if>
+      <if test="close != null">
+        close,
+      </if>
+      <if test="low != null">
+        low,
+      </if>
+      <if test="high != null">
+        high,
+      </if>
+      <if test="volume != null">
+        volume,
+      </if>
+      <if test="volamount != null">
+        volamount,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="unitNum != null">
+        unit_num,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="endAt != null">
+        end_at,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="startAt != null">
+        #{startAt,jdbcType=BIGINT},
+      </if>
+      <if test="exchangeId != null">
+        #{exchangeId,jdbcType=BIGINT},
+      </if>
+      <if test="baseId != null">
+        #{baseId,jdbcType=BIGINT},
+      </if>
+      <if test="quoteId != null">
+        #{quoteId,jdbcType=BIGINT},
+      </if>
+      <if test="open != null">
+        #{open,jdbcType=DECIMAL},
+      </if>
+      <if test="close != null">
+        #{close,jdbcType=DECIMAL},
+      </if>
+      <if test="low != null">
+        #{low,jdbcType=DECIMAL},
+      </if>
+      <if test="high != null">
+        #{high,jdbcType=DECIMAL},
+      </if>
+      <if test="volume != null">
+        #{volume,jdbcType=DECIMAL},
+      </if>
+      <if test="volamount != null">
+        #{volamount,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=TINYINT},
+      </if>
+      <if test="unitNum != null">
+        #{unitNum,jdbcType=TINYINT},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="endAt != null">
+        #{endAt,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="me.bl0ckchain.analyst.core.entity.Kline">
+    update
+    <include refid="table">
+      <property name="unit" value="#{unit}"/>
+      <property name="unit_num" value="#{unitNum}"/>
+    </include>
+    <set>
+      <if test="exchangeId != null">
+        exchange_id = #{exchangeId,jdbcType=BIGINT},
+      </if>
+      <if test="baseId != null">
+        base_id = #{baseId,jdbcType=BIGINT},
+      </if>
+      <if test="quoteId != null">
+        quote_id = #{quoteId,jdbcType=BIGINT},
+      </if>
+      <if test="open != null">
+        open = #{open,jdbcType=DECIMAL},
+      </if>
+      <if test="close != null">
+        close = #{close,jdbcType=DECIMAL},
+      </if>
+      <if test="low != null">
+        low = #{low,jdbcType=DECIMAL},
+      </if>
+      <if test="high != null">
+        high = #{high,jdbcType=DECIMAL},
+      </if>
+      <if test="volume != null">
+        volume = #{volume,jdbcType=DECIMAL},
+      </if>
+      <if test="volamount != null">
+        volamount = #{volamount,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=TINYINT},
+      </if>
+      <if test="unitNum != null">
+        unit_num = #{unitNum,jdbcType=TINYINT},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="endAt != null">
+        end_at = #{endAt,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.bl0ckchain.analyst.core.entity.Kline">
+    update
+    <include refid="table">
+      <property name="unit" value="#{unit}"/>
+      <property name="unit_num" value="#{unitNum}"/>
+    </include>
+    set exchange_id = #{exchangeId,jdbcType=BIGINT},
+      base_id = #{baseId,jdbcType=BIGINT},
+      quote_id = #{quoteId,jdbcType=BIGINT},
+      open = #{open,jdbcType=DECIMAL},
+      close = #{close,jdbcType=DECIMAL},
+      low = #{low,jdbcType=DECIMAL},
+      high = #{high,jdbcType=DECIMAL},
+      volume = #{volume,jdbcType=DECIMAL},
+      volamount = #{volamount,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DECIMAL},
+      unit = #{unit,jdbcType=TINYINT},
+      unit_num = #{unitNum,jdbcType=TINYINT},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      end_at = #{endAt,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into
+    <include refid="table">
+      <property name="unit" value="#{unit}"/>
+      <property name="unit_num" value="#{unitNum}"/>
+    </include>
+    (id, start_at, exchange_id,
+    base_id, quote_id, open,
+    close, low, high, volume,
+    volamount, amount, unit,
+    unit_num, create_at, update_at,
+    end_at, status)
+    values
+    <foreach collection ="list" item="kline" index= "index" separator =",">
+      (#{kline.id,jdbcType=BIGINT}, #{kline.startAt,jdbcType=BIGINT}, #{kline.exchangeId,jdbcType=BIGINT},
+      #{kline.baseId,jdbcType=BIGINT}, #{kline.quoteId,jdbcType=BIGINT}, #{kline.open,jdbcType=DECIMAL},
+      #{kline.close,jdbcType=DECIMAL}, #{kline.low,jdbcType=DECIMAL}, #{kline.high,jdbcType=DECIMAL}, #{kline.volume,jdbcType=DECIMAL},
+      #{kline.volamount,jdbcType=INTEGER}, #{kline.amount,jdbcType=DECIMAL}, #{kline.unit,jdbcType=TINYINT},
+      #{kline.unitNum,jdbcType=TINYINT}, #{kline.createAt,jdbcType=BIGINT}, #{kline.updateAt,jdbcType=BIGINT},
+      #{kline.endAt,jdbcType=BIGINT}, #{kline.status,jdbcType=TINYINT})
+    </foreach >
+  </insert>
+
+  <select id="selectByQuery" parameterType="me.bl0ckchain.analyst.core.query.KlineQuery" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+    <include refid="table">
+      <property name="unit" value="#{unit}"/>
+      <property name="unit_num" value="#{unitNum}"/>
+    </include>
+    where exchange_id = #{exchangeId,jdbcType=BIGINT}
+    and base_id = #{baseId,jdbcType=BIGINT}
+    and quote_id = #{quoteId,jdbcType=BIGINT}
+    and start_at = #{startAt,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByPage" parameterType="me.bl0ckchain.analyst.core.query.KlineQuery" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+    <include refid="table">
+      <property name="unit" value="#{unit}"/>
+      <property name="unit_num" value="#{unitNum}"/>
+    </include>
+    where exchange_id = #{exchangeId,jdbcType=BIGINT}
+    and base_id = #{baseId,jdbcType=BIGINT}
+    and quote_id = #{quoteId,jdbcType=BIGINT}
+    and start_at between #{startAt,jdbcType=BIGINT} and #{endAt,jdbcType=BIGINT}
+    order by start_at desc
+  </select>
+</mapper>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.bl0ckchain.analyst.core.mapper.IndicationMapper">
+  <resultMap id="BaseResultMap" type="me.bl0ckchain.analyst.core.entity.Indication">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="intervals" jdbcType="VARCHAR" property="intervals" />
+    <result column="create_at" jdbcType="BIGINT" property="createAt" />
+    <result column="update_at" jdbcType="BIGINT" property="updateAt" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, code, description, intervals, weight, create_at, update_at, status
+  </sql>
+  <sql id="Extra_Column_List">
+    i.id, i.name, i.code, i.description, i.intervals, i.weight, i.create_at, i.update_at, i.status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from a_indication
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from a_indication
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="me.bl0ckchain.analyst.core.entity.Indication">
+    insert into a_indication (id, name, code, 
+      description, intervals, create_at, update_at,
+      status)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{intervals,jdbcType=VARCHAR}, #{weight,jdbcType=INTEGER},
+      #{createAt,jdbcType=BIGINT}, #{updateAt,jdbcType=BIGINT},#{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="me.bl0ckchain.analyst.core.entity.Indication">
+    insert into a_indication
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="intervals != null">
+        intervals,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="intervals != null">
+        #{intervals,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="me.bl0ckchain.analyst.core.entity.Indication">
+    update a_indication
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="intervals != null">
+        intervals = #{intervals,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.bl0ckchain.analyst.core.entity.Indication">
+    update a_indication
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      intervals = #{intervals,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=BIGINT},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKeys" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from a_indication
+    <if test="ids != null">
+      where id in
+      <foreach collection="ids" item="id" index="index"
+               open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+  </select>
+
+  <select id="selectIds" resultType="java.lang.Long">
+    select
+    id
+    from a_indication
+  </select>
+</mapper>

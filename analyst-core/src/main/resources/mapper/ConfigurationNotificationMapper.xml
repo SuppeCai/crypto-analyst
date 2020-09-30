@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.bl0ckchain.analyst.core.mapper.ConfigurationNotificationMapper">
+  <resultMap id="BaseResultMap" type="me.bl0ckchain.analyst.core.entity.ConfigurationNotification">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="configuration_id" jdbcType="BIGINT" property="configurationId" />
+    <result column="notification_id" jdbcType="BIGINT" property="notificationId" />
+    <result column="create_at" jdbcType="BIGINT" property="createAt" />
+    <result column="update_at" jdbcType="BIGINT" property="updateAt" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, configuration_id, notification_id, create_at, update_at, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from a_configuration_notification
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from a_configuration_notification
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="me.bl0ckchain.analyst.core.entity.ConfigurationNotification">
+    insert into a_configuration_notification (id, configuration_id, notification_id, 
+      create_at, update_at, status
+      )
+    values (#{id,jdbcType=BIGINT}, #{configurationId,jdbcType=BIGINT}, #{notificationId,jdbcType=BIGINT}, 
+      #{createAt,jdbcType=BIGINT}, #{updateAt,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="me.bl0ckchain.analyst.core.entity.ConfigurationNotification">
+    insert into a_configuration_notification
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="configurationId != null">
+        configuration_id,
+      </if>
+      <if test="notificationId != null">
+        notification_id,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="configurationId != null">
+        #{configurationId,jdbcType=BIGINT},
+      </if>
+      <if test="notificationId != null">
+        #{notificationId,jdbcType=BIGINT},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="me.bl0ckchain.analyst.core.entity.ConfigurationNotification">
+    update a_configuration_notification
+    <set>
+      <if test="configurationId != null">
+        configuration_id = #{configurationId,jdbcType=BIGINT},
+      </if>
+      <if test="notificationId != null">
+        notification_id = #{notificationId,jdbcType=BIGINT},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.bl0ckchain.analyst.core.entity.ConfigurationNotification">
+    update a_configuration_notification
+    set configuration_id = #{configurationId,jdbcType=BIGINT},
+      notification_id = #{notificationId,jdbcType=BIGINT},
+      create_at = #{createAt,jdbcType=BIGINT},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="listAssociatedIds" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select
+    notification_id
+    from a_configuration_notification
+    where configuration_id = #{configurationId,jdbcType=BIGINT}
+    and status = 0
+  </select>
+</mapper>

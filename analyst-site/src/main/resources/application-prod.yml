@@ -1,0 +1,21 @@
+# spring
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://local-mysql:3306/analyst?useSSL=false&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false
+    url : jdbc:mysql://local-mysql:3306/analyst
+    username : root
+    password : pwd
+    driverClassName : com.mysql.jdbc.Driver
+  rabbitmq:
+    host: local-rabbitmq
+  redis:
+    host: local-redis
+
+# logback
+logging:
+  path: /home/logs/analyst
+  config: classpath:logback-spring.xml
+  pattern:
+    console: "[%d{yyyy-MM-dd HH:mm:ss}] [%thread] [%-5p]:[%c] -- %m%n"
+    file: "[%d{yyyy-MM-dd HH:mm:ss}] -- [%-5p]: [%c] -- %m%n"
